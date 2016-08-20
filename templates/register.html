@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定用户账号</title>
+    <link rel="stylesheet" href="/static/css/weui.css"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+</head>
+<body>
+<div class="container" id="container"></div>
+<div class="hd">
+    <h1 class="page_title" style="text-align:center">绑定</h1>
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">小米账号</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" id="phone" type="number" pattern="[0-9]{11}" placeholder="请输入手机号"/>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="password" id="password" placeholder="请输入登录密码"/>
+            </div>
+        </div>
+    </div>
+    <div class="weui_cells_tips">请注意账号将与小米账号绑定</div>
+    <a id="open_ID" style="display: none">{{ open_ID }}</a>
+    <div class="weui_btn_area">
+        <a class="weui_btn weui_btn_primary" href="javascript:" id="showTooltips" onclick="sub()">确定</a>
+    </div>
+</div>
+<script src="/static/js/jquery-3.0.0.min.js"></script>
+<script>
+    function sub() {
+        var open_ID = $('#open_ID').text();
+        var data = {
+            'phone': $('#phone').val(),
+            'password': $('#password').val(),
+            'open_ID': open_ID
+        };
+        $.post('/wechat/check_register/', data, function (data) {
+            if (data == 'success') {
+                alert('注册成功!');
+                WeixinJSBridge.invoke('closeWindow', {}, function (res) {
+                });
+            } else {
+                alert(data);
+            }
+        })
+
+    }
+</script>
+</body>
+</html>
