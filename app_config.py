@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from secret_config import db_url, port, appid, appsecret
+from secret_config import db_url, port, appid, appsecret, wechat_id, wechat_secret
 from wechat_sdk import *
 
 app = Flask(__name__)
@@ -13,7 +13,5 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['ALLOW_FILE'] = ['jpg', 'jpeg', 'gif', 'png', 'bmp']
 db = SQLAlchemy(app)
 
-
-conf = WechatConf(app_ID='wxd39fc293152eaaf0', appsecret='7dbe721d3175de1bb6b5468ab14ec997',
-                  token='token', encrypt_mode='normal')
+conf = WechatConf(app_ID=wechat_id, appsecret=wechat_secret, token='token', encrypt_mode='normal')
 wechat = WechatBasic(conf=conf)
